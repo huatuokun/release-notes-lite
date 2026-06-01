@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from contextlib import redirect_stdout
+from contextlib import redirect_stderr
 from io import StringIO
 import tempfile
 import unittest
@@ -58,7 +59,8 @@ class ReleaseNotesTests(unittest.TestCase):
             with patch("release_notes_lite.cli.generate_release_notes") as generator_mock:
                 generator_mock.side_effect = RuntimeError("git log failed")
                 buffer = StringIO()
-                with redirect_stdout(buffer):
+                error_buffer = StringIO()
+                with redirect_stdout(buffer), redirect_stderr(error_buffer):
                     exit_code = main(["generate", "--range", "HEAD~1..HEAD", "--root", str(root)])
 
             self.assertEqual(exit_code, 1)

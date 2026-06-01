@@ -22,6 +22,8 @@ release-notes generate --range v0.1.0..HEAD
 release-notes generate --range HEAD~10..HEAD --format markdown
 ```
 
+If you are drafting notes for the first commit in a new repository, use `--range HEAD`.
+
 ## Example
 
 ```text
